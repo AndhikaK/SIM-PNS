@@ -3,8 +3,10 @@
 <?= $this->section('content') ?>
 
 
+
 <div class="container">
-    <div class="uk-padding" uk-grid>
+    <h1>Data Pegawai</h1>
+    <div class="container-detail-data  uk-padding-small" uk-grid>
         <div class="uk-width-auto@m">
             <div class="uk-background-primary">
                 <img width="150" height="225" alt="" uk-img="data-src:" uk-svg>

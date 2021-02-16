@@ -179,7 +179,7 @@ class Home extends BaseController
 
 	public function tambahDataDua($table)
 	{
-		$fields = $this->poldaModel->getTableCollumn($table);
+		$fieldPegawai = $this->poldaModel->getTableCollumn($table);
 		$data = array();
 
 		// format untuk tabel pegawai
@@ -192,7 +192,7 @@ class Home extends BaseController
 		$bagian = explode(" ", $this->request->getVar('id_bagian'));
 		$subbag = explode(" ", $this->request->getVar('id_subbag'));
 
-		foreach ($fields as $field) {
+		foreach ($fieldPegawai as $field) {
 			if ($field == 'ttl') {
 				$data[$field] = $ttl;
 			} elseif ($field == 'jabatan') {
@@ -224,6 +224,77 @@ class Home extends BaseController
 			return redirect()->to(base_url("/menu/lihat-struktur/" . $table));
 		}
 	}
+
+	public function tambahDataTiga($table)
+	{
+		$fieldPegawai = $this->poldaModel->getTableCollumn($table);
+		$fieldPekerjaan = $this->poldaModel->getTableCollumn('riwayat_pekerjaan');
+		$data = array();
+
+		// format untuk tabel pegawai
+		$tahunLahir = $this->request->getVar('tahun_lahir');
+		$bulanLahir = $this->request->getVar('bulan_lahir');
+		$tanggalLahir = $this->request->getVar('tanggal_lahir');
+		$ttl = $tahunLahir . "-" . $bulanLahir . "-" . $tanggalLahir;
+		$jabatan = explode(" ", $this->request->getVar('jabatan'));
+		$satker = explode(" ", $this->request->getVar('id_satker'));
+		$bagian = explode(" ", $this->request->getVar('id_bagian'));
+		$subbag = explode(" ", $this->request->getVar('id_subbag'));
+
+		foreach ($fieldPegawai as $field) {
+			if ($field == 'ttl') {
+				$data[$field] = $ttl;
+			} elseif ($field == 'jabatan') {
+				$data[$field] = $jabatan[0];
+			} elseif ($field == 'id_satker') {
+				$data[$field] = $satker[0];
+			} elseif ($field === "id_bagian") {
+				$data[$field] = $bagian[0];
+			} elseif ($field == 'id_subbag') {
+				$data[$field] = $subbag[0];
+			} else {
+				$data[$field] = $this->request->getVar($field);
+			}
+		}
+
+		$riwayatPekerjaan = array();
+		foreach ($fieldPekerjaan as $field) {
+			if ($field == 'ttl') {
+				$riwayatPekerjaan[$field] = $ttl;
+			} elseif ($field == 'jabatan') {
+				$riwayatPekerjaan[$field] = $jabatan[0];
+			} elseif ($field == 'id_satker') {
+				$riwayatPekerjaan[$field] = $satker[0];
+			} elseif ($field === "id_bagian") {
+				$riwayatPekerjaan[$field] = $bagian[0];
+			} elseif ($field == 'id_subbag') {
+				$riwayatPekerjaan[$field] = $subbag[0];
+			} elseif ($field == 'tanggal_mulai') {
+				$riwayatPekerjaan[$field] = '1000-01-01';
+			} else {
+				$riwayatPekerjaan[$field] = $this->request->getVar($field);
+			}
+		}
+
+		try {
+			if ($this->poldaModel->insertData($table, $data) > 0) {
+				session()->setFlashData('success', 'Tambah data berhasil!');
+			} else {
+				session()->setFlashData('error', 'Tambah data gagal!');
+			}
+			$this->poldaModel->insertData('riwayat_pekerjaan', $riwayatPekerjaan);
+		} catch (\Exception $e) {
+			session()->setFlashData('error', $e->getMessage());
+		}
+
+		if ($table == 'pegawai') {
+			return redirect()->to(base_url('/menu/input-data'));
+		} else {
+			return redirect()->to(base_url("/menu/lihat-struktur/" . $table));
+		}
+	}
+
+
 
 	public function download()
 	{

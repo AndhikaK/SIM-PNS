@@ -17,7 +17,7 @@
             <h1>Ini input data</h1>
 
             <div class="input_data_pns container">
-                <form action="<?= base_url('/home/tambahdatadua/pegawai') ?>" method="POST">
+                <form action="<?= base_url('/home/tambahdatatiga/pegawai') ?>" method="POST">
                     <?= csrf_field(); ?>
                     <div class="row">
                         <div class="col gap-3">

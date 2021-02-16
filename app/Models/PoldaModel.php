@@ -62,11 +62,11 @@ class PoldaModel extends Model
         ) as q 
             on q.nip = p.nip
         LEFT OUTER JOIN satker ON
-            satker.id_satker = q.id_satker
+            q.id_satker = satker.id_satker
         LEFT OUTER JOIN bagian ON
-            bagian.id_bagian = q.id_bagian
+            q.id_bagian = bagian.id_bagian
         LEFT OUTER JOIN subbag ON
-            subbag.id_subbag = q.id_subbag
+            q.id_subbag = subbag.id_subbag
         ";
 
         return $this->db->query($query)->getResultArray();

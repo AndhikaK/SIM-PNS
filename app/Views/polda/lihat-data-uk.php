@@ -2,7 +2,10 @@
 
 <?= $this->section('content'); ?>
 
-<div class="container">
+<div class="container uk-padding-small">
+
+
+    <h1>Lihat Data Pegawai</h1>
     <table class="uk-table uk-table-hover uk-box-shadow-small">
         <thead class="uk-background-secondary">
             <tr>

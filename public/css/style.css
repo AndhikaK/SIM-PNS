@@ -27,3 +27,7 @@ th {
 .back {
   min-height: 100vh;
 }
+
+.container-detail-data {
+  background-color: white;
+}
