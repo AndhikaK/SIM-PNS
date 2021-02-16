@@ -329,7 +329,7 @@ class Home extends BaseController
 		}
 
 		if ($table == 'pegawai') {
-			return redirect()->to(base_url('/menu/lihat-data-uk'));
+			return redirect()->to(base_url('/menu/lihat-data'));
 		} else {
 			// return redirect()->to(base_url('/menu/test'));
 			return redirect()->to(base_url("/menu/lihat-struktur/" . $table));
@@ -338,7 +338,9 @@ class Home extends BaseController
 
 	public function lihatDetail($nip)
 	{
-		$dataUmum = $this->poldaModel->getDetailData('pegawai', 'nip', $nip);
+		// $dataUmum = $this->poldaModel->getDetailData('pegawai', 'nip', $nip);
+
+		$dataUmum = $this->poldaModel->lihatDetailPegawai($nip);
 
 		$data = [
 			'title' => 'Detail PNS',

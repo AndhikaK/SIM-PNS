@@ -45,7 +45,6 @@ class PoldaModel extends Model
 
     public function lihatDataPegawai()
     {
-        // p.*, q.*, satker.*, bagian.*, subbag.*
         $query = "SELECT 
             p.nip, p.nama_pegawai, p.jabatan, satker.nama_satker, bagian.nama_bagian, subbag.nama_subbag
         FROM 
@@ -67,6 +66,36 @@ class PoldaModel extends Model
             q.id_bagian = bagian.id_bagian
         LEFT OUTER JOIN subbag ON
             q.id_subbag = subbag.id_subbag
+        ";
+
+        return $this->db->query($query)->getResultArray();
+    }
+
+    public function lihatDetailPegawai($nip)
+    {
+        $query = "SELECT 
+            p.*, satker.nama_satker, bagian.nama_bagian, subbag.nama_subbag, q.*
+        FROM 
+            pegawai p
+        LEFT OUTER JOIN (
+            SELECT t1.* 
+            FROM riwayat_pekerjaan t1
+            WHERE t1.tanggal_mulai = (
+                SELECT tanggal_mulai FROM riwayat_pekerjaan
+                 WHERE nip = t1.nip
+                 ORDER BY tanggal_mulai DESC
+                 LIMIT 1
+            )
+        ) as q 
+            on q.nip = p.nip
+        LEFT OUTER JOIN satker ON
+            q.id_satker = satker.id_satker
+        LEFT OUTER JOIN bagian ON
+            q.id_bagian = bagian.id_bagian
+        LEFT OUTER JOIN subbag ON
+            q.id_subbag = subbag.id_subbag
+        WHERE
+            p.nip = '$nip'
         ";
 
         return $this->db->query($query)->getResultArray();
