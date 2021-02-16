@@ -64,6 +64,21 @@ class Home extends BaseController
 		return view('polda/lihat-data', $data);
 	}
 
+
+	public function lihatDataUK()
+	{
+
+
+		$pegawai = $this->poldaModel->lihatDataPegawai();
+
+		$data = [
+			'title' => 'Lihat Data PNS',
+			'pegawai' => $pegawai
+		];
+
+		return view('polda/lihat-data-uk', $data);
+	}
+
 	public function inputData()
 	{
 		$data = [
@@ -96,12 +111,9 @@ class Home extends BaseController
 			'title' => 'ini Testing'
 		];
 
-		echo "<script> alert('dfsdfdsf') </script>";
-
-		return view('/polda/testing', $data);
-
-		// return redirect()->back()->with('foo', 'message');
+		return view('polda/testing', $data);
 	}
+
 
 	public function tambahData($struktur)
 	{
@@ -165,9 +177,9 @@ class Home extends BaseController
 		}
 	}
 
-	public function tambahDataDua($struktur)
+	public function tambahDataDua($table)
 	{
-		$fields = $this->poldaModel->getTableCollumn($struktur);
+		$fields = $this->poldaModel->getTableCollumn($table);
 		$data = array();
 
 		// format untuk tabel pegawai
@@ -197,7 +209,7 @@ class Home extends BaseController
 		}
 
 		try {
-			if ($this->poldaModel->insertData($struktur, $data) > 0) {
+			if ($this->poldaModel->insertData($table, $data) > 0) {
 				session()->setFlashData('success', 'Tambah data berhasil!');
 			} else {
 				session()->setFlashData('error', 'Tambah data gagal!');
@@ -206,10 +218,10 @@ class Home extends BaseController
 			session()->setFlashData('error', $e->getMessage());
 		}
 
-		if ($struktur == 'pegawai') {
+		if ($table == 'pegawai') {
 			return redirect()->to(base_url('/menu/input-data'));
 		} else {
-			return redirect()->to(base_url("/menu/lihat-struktur/" . $struktur));
+			return redirect()->to(base_url("/menu/lihat-struktur/" . $table));
 		}
 	}
 
@@ -246,9 +258,22 @@ class Home extends BaseController
 		}
 
 		if ($table == 'pegawai') {
-			return redirect()->to(base_url('/menu/lihat-data'));
+			return redirect()->to(base_url('/menu/lihat-data-uk'));
 		} else {
+			// return redirect()->to(base_url('/menu/test'));
 			return redirect()->to(base_url("/menu/lihat-struktur/" . $table));
 		}
+	}
+
+	public function lihatDetail($nip)
+	{
+		$dataUmum = $this->poldaModel->getDetailData('pegawai', 'nip', $nip);
+
+		$data = [
+			'title' => 'Detail PNS',
+			'umum' => $dataUmum[0]
+		];
+
+		return view('polda/detail-pegawai', $data);
 	}
 }

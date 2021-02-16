@@ -36,7 +36,10 @@ $routes->get('/menu/lihat-data', 'Home::lihatData');
 $routes->get('/menu/input-data', 'Home::inputData');
 $routes->get('/menu/tambah-data', 'Home::tambahData');
 $routes->get('/menu/lihat-struktur/(:segment)', 'Home::lihatStruktur/$1');
+$routes->get('/menu/detail-pegawai/(:segment)', 'Home::lihatDetail/$1');
 $routes->get('/menu/test', 'Home::test');
+
+
 
 /*
  * --------------------------------------------------------------------

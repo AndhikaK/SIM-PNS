@@ -2,8 +2,11 @@
 
 <?= $this->section('content'); ?>
 
-<form action="<?= base_url('/menu/download') ?>" method="post">
-    <button class="btn btn-primary">Download</button>
-</form>
+<script src="">
+    UIkit.notification({
+        message: 'Danger message...',
+        status: 'danger'
+    })
+</script>
 
 <?= $this->endSection(); ?>

@@ -1,0 +1,29 @@
+table thead th {
+  font-size: 8px;
+}
+
+th {
+  color: white;
+}
+
+.uk-table thead tr th {
+  color: white;
+  font-weight: bolder;
+}
+
+.detail table tr th {
+  color: black;
+  font-weight: bolder;
+}
+
+.table-detail {
+  padding-left: 30px;
+}
+
+.uk-table tbody tr td {
+  background-color: white;
+}
+
+.back {
+  min-height: 100vh;
+}
