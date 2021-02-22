@@ -2,6 +2,6 @@
 
 <?= $this->section('content'); ?>
 
-<h1>Ini polda</h1>
+<h2><?= $title ?></h2>
 
 <?= $this->endSection(); ?>

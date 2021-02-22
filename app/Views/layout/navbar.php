@@ -1,25 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href=" <?= base_url('/'); ?> ">CI App</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href=" <?= base_url('/'); ?> ">Beranda</a>
+<nav class="uk-navbar-container uk-margin uk-box-shadow-medium uk-light navbar-color" uk-navbar>
+    <div class="uk-navbar-left">
+        <a class="uk-navbar-item uk-logo" href=" <?= base_url('/'); ?> ">SIM-PNS</a>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Menu
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href=" <?= base_url('/menu/lihat-data') ?> ">Lihat Data PNS</a></li>
-                        <li><a class="dropdown-item" href=" <?= base_url('/menu/input-data') ?> ">Input Data PNS</a></li>
-                        <li><a class="dropdown-item" href=" <?= base_url('/menu/lihat-struktur/jabatan') ?> ">Lihat Struktur </a></li>
-                    </ul>
-                </li>
-                <li><a class="nav-link active" href=" <?= base_url('/menu/test') ?> ">Test SQL</a></li>
-            </div>
-        </div>
+
+
+        <ul class="uk-navbar-nav">
+            <li><a href=" <?= base_url('/beranda') ?> ">Beranda</a></li>
+        </ul>
+        <ul class="uk-navbar-nav">
+            <li><a href=" <?= base_url('/data_pegawai') ?> ">Data Pegawai</a></li>
+        </ul>
+        <ul class="uk-navbar-nav">
+            <li><a href=" <?= base_url('/tambah_data_pegawai') ?> ">Input Pegawai</a></li>
+        </ul>
+        <ul class="uk-navbar-nav">
+            <li><a href=" <?= base_url('/data_master') ?> ">Master Data</a></li>
+        </ul>
+        <ul class="uk-navbar-nav ">
+            <li class=""><a class="" href=" <?= base_url('/menu/testingpage') ?> ">Testing Page</a></li>
+        </ul>
+
     </div>
 </nav>

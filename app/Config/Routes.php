@@ -31,15 +31,12 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->get('/menu/lihat-data', 'Home::lihatdatauk');
-$routes->get('/menu/input-data', 'Home::inputData');
-$routes->get('/menu/tambah-data', 'Home::tambahData');
-$routes->get('/menu/lihat-struktur/(:segment)', 'Home::lihatStruktur/$1');
-$routes->get('/menu/detail-pegawai/(:segment)', 'Home::lihatDetail/$1');
-$routes->get('/menu/test', 'Home::test');
-
-
+$routes->get('/', 'Menu::index');
+$routes->get('/beranda', 'Menu::index');
+$routes->get('/data_pegawai', 'Menu::dataPegawai');
+$routes->get('/detail_pegawai/(:segment)', 'Menu::lihatDetail/$1');
+$routes->get('/tambah_data', 'Menu::tambahdatapegawai');
+$routes->get('/tambah_data_pegawai', 'Menu::tambah_pegawai');
 
 /*
  * --------------------------------------------------------------------
