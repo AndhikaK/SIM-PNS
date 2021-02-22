@@ -172,21 +172,26 @@ class PoldaModel extends Model
         }
 
         $field = '';
+        $filterLength = count($filterItem);
+        $x = 1;
         foreach ($filterItem as $name => $value) {
             $filter = '';
             if ($field == '') {
-                $filter = '';
+                $filter = '(';
             } else {
-                $filter = $field == $value ? " or " : " and ";
+                $filter = $field == $value ? " or " : ") and (";
             }
+
             $filter .= $value . " = '" . $name . "'";
             $filter = str_replace("@", ".", $filter);
             $filterClause .= $filter;
 
+            $filterClause .= $x == $filterLength ? ")" : "";
+
             $field = $value;
+            $x++;
         }
 
-        d($filterClause);
 
         // $field = '';
         // foreach ($filterItem as $name => $value) {
@@ -267,7 +272,6 @@ class PoldaModel extends Model
             }
         }
 
-        d($query);
 
         return $this->db->query($query)->getResultArray();
     }

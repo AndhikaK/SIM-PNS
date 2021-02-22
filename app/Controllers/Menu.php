@@ -66,12 +66,20 @@ class Menu extends BaseController
 			}
 		}
 
-		d($filterData);
-		d($filterItem);
+		$dataPegawai = $this->poldaModel->searchData($keyword, $columns, $filterItem);
 
-		$data = $this->poldaModel->searchData($keyword, $columns, $filterItem);
+		$data = [
+			'title' => 'Data Pegawai',
+			'columns' => $columns,
+			'dataPegawai' => $dataPegawai,
+			'jabatan' => $this->poldaModel->getAllData('jabatan'),
+			'pangkat_golongan' => $this->poldaModel->getAllData('golongan_pangkat'),
+			'satker' => $this->poldaModel->getAllData('satker'),
+			'bagian' => $this->poldaModel->getAllData('bagian'),
+			'subbag' => $this->poldaModel->getAllData('subbag')
+		];
 
-		dd($data);
+		return view('view/search_pegawai', $data);
 	}
 
 	public function testingPage()

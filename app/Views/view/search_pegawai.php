@@ -49,15 +49,13 @@
                             <?php endforeach; ?>
                         </div>
                         <div class="satker-grid uk-flex uk-flex-column">
-                            <div>Sub Bagian</div>
+                            <div>Golongan dan Pangkat</div>
                             <?php foreach ($subbag as $item) : ?>
                                 <label><input class="uk-checkbox uk-margin-small-right" type="checkbox" value="<?= $item['nama_subbag'] ?>" name="<?= "filter-nama_subbag-" . $item['nama_subbag'] ?>"><?= $item['nama_subbag'] ?></label>
                             <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             <div>
