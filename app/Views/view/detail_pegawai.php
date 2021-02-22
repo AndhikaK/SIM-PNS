@@ -2,7 +2,8 @@
 
 <?= $this->section('content') ?>
 
-<div class="container container-detail-data">
+
+<div class="uk-container container-detail-data">
     <h1>Data Pegawai</h1>
     <div class="  uk-padding-small" uk-grid>
         <div class="uk-width-auto@m uk-margin-top">
@@ -53,11 +54,11 @@
                     </tr>
                     <tr>
                         <th>Golongan dan Pangkat</th>
-                        <td><?= $umum['nik'] ?></td>
+                        <td class="uk-text-break"><?= $umum['id_golongan'] . " - " . $umum['pangkat'] ?></td>
                     </tr>
                     <tr>
                         <th>Jabatan</th>
-                        <td><?= $umum['nik'] ?></td>
+                        <td><?= $umum['nama_jabatan'] ?></td>
                     </tr>
                     <tr>
                         <th>Satuan Kerja</th>

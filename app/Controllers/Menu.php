@@ -234,4 +234,16 @@ class Menu extends BaseController
 
 		return view('view/detail_pegawai', $data);
 	}
+
+	public function dataMaster($struktur)
+	{
+		$data = [
+			'title' => 'Lihat Struktur Organisasi',
+			'fields' => $this->poldaModel->getTableCollumn($struktur),
+			'data' => $this->poldaModel->getAllData($struktur),
+			'dropdownItem' => $struktur
+		];
+
+		return view('view/data_master', $data);
+	}
 }
