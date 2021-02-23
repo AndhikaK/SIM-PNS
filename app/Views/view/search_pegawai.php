@@ -70,6 +70,12 @@
 
 
 <div>
+    <div class="export">
+        <form action="<?= base_url('/menu/exportQuery') ?>">
+            <input type="text" hidden value="<?= $searchQuery; ?>" name="searchQuery">
+            <button class="uk-button uk-button-primary uk-button-small">Export</button>
+        </form>
+    </div>
     <table class="uk-table uk-table-hover uk-box-shadow-small">
         <thead class="uk-background-secondary">
             <tr>

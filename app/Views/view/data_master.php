@@ -21,7 +21,7 @@
             <button class="uk-button btn-success uk-margin-small-bottom uk-margin-left" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Tambah Data</button>
 
             <div class="collapse m-4" id="collapseExample">
-                <form method="POST" action="<?= base_url('/home/tambahdatadua') . '/' . $dropdownItem ?>">
+                <form method="POST" action="<?= base_url('/menu/tambahdatadua') . '/' . $dropdownItem ?>">
                     <?= csrf_field(); ?>
                     <?php foreach ($fields as $field) : ?>
                         <div class="row mb-3">
@@ -60,7 +60,7 @@
                                         create
                                     </span>
 
-                                    <a href="<?= base_url("/home/delete/" . $row[$fields[0]] . "/" . $fields[0] . "/" . $dropdownItem) ?>"><span class="material-icons text-danger">delete</span></a>
+                                    <a href="<?= base_url("/menu/delete/" . $row[$fields[0]] . "/" . $fields[0] . "/" . $dropdownItem) ?>"><span class="material-icons text-danger">delete</span></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

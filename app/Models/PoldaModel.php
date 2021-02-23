@@ -272,7 +272,12 @@ class PoldaModel extends Model
             }
         }
 
+        $dataPegawai = $this->db->query($query)->getResultArray();
+        return array($dataPegawai, $query);
+    }
 
+    public function executeQuery($query)
+    {
         return $this->db->query($query)->getResultArray();
     }
 }

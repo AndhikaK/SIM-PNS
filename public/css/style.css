@@ -9,3 +9,47 @@
 .navbar-color {
   background-color: black !important;
 }
+
+input[type="text"]:disabled {
+  /* border: none; */
+  text-transform: uppercase;
+  background-color: transparent;
+}
+
+.container-detail-data {
+  font-size: 11px;
+}
+
+.ttl td input {
+  max-width: fit-content;
+  background-color: transparent;
+}
+
+.ttl td .ttl2 {
+  max-width: 80px;
+}
+
+.pangkat .golongan {
+  max-width: 20px;
+}
+
+.pangkat .nama_pangkat {
+  max-width: 40px;
+  border: black;
+}
+
+thead {
+  background-color: rgb(32, 32, 32);
+  color: white;
+}
+.detail-riwayat {
+  margin-bottom: 100px !important;
+}
+
+.riwayat-container {
+  min-height: 300px;
+}
+/* 
+.detail-riwayat li table {
+  width: 70vw;
+} */

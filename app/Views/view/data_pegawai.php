@@ -12,8 +12,11 @@
                 <input class="uk-input" type="text" name="keyword" id="keyword">
             </div>
 
+
             <button type="submit" class="uk-button btn-primary">Search</button>
             <a class="uk-button btn-secondary" data-bs-toggle="collapse" href="#collapse-filter" role="button" aria-expanded="false" aria-controls="collapse-filter">Filter</a>
+
+
 
             <div class="collapse m-4" id="collapse-filter">
                 <div class="uk-card uk-card-default uk-padding uk-border-rounded">
@@ -56,8 +59,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             <div>
@@ -70,8 +71,8 @@
 
 
 
-
 <div>
+
     <table class="uk-table uk-table-hover uk-box-shadow-small">
         <thead class="uk-background-secondary">
             <tr>
