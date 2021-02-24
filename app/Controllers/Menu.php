@@ -462,15 +462,15 @@ class Menu extends BaseController
 				$this->poldaModel->updateDataRiwayat('riwayat_jabatan', $dataJabatan) > 0 &&
 				$this->poldaModel->updateDataRiwayat('riwayat_golongan', $dataGolongan) > 0
 			) {
-				session()->setFlashData('success', 'Tambah data berhasil!');
+				session()->setFlashData('success', 'Update data berhasil!');
 			} else {
-				session()->setFlashData('error', 'Tambah data gagal!');
+				session()->setFlashData('error', 'Update data gagal!');
 			}
 		} catch (\Exception $e) {
 			session()->setFlashData('error', $e->getMessage());
 		}
 
-		return redirect()->to(base_url('/lihatdetail/' . $dataPegawai['nip']));
+		return redirect()->to(base_url('/menu/lihatdetail/' . $dataPegawai['nip']));
 	}
 
 	public function test()

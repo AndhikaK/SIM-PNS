@@ -55,15 +55,17 @@
                             <?php else : ?>
                                 <td>
                                     <input type="text" name="tempat_lahir" value="<?= $umum['tempat_lahir'] ?>" <?= $edit == null ? "disabled" : "" ?>>
-                                    <input class="ttl2" type="text" list="listTanggalOption" name="tanggal_lahir" value="<?= $ttlExplode[2] ?>" <?= $edit == null ? "disabled" : "" ?>>
+                                    <div>
+                                        <input class="ttl2" type="text" list="listTanggalOption" name="tanggal_lahir" value="<?= $ttlExplode[2] ?>" <?= $edit == null ? "disabled" : "" ?>>
+                                        <datalist id="listTanggalOption">
+                                            <?php for ($j = 1; $j < 32; $j++) : ?>
+                                                <option value="<?= $j; ?>"></option>
+                                            <?php endfor ?>
+                                        </datalist>
+                                    </div>
                                     <input class="ttl2" type="text" list="listBulanOption" name="bulan_lahir" value="<?= $ttlExplode[1] ?>" <?= $edit == null ? "disabled" : "" ?>>
                                     <input class="ttl2" type="text" list="listTahunOption" name="tahun_lahir" value="<?= $ttlExplode[0] ?>" <?= $edit == null ? "disabled" : "" ?>>
 
-                                    <datalist id="listTanggalOption">
-                                        <?php for ($j = 1; $j < 32; $j++) : ?>
-                                            <option value="<?= $j; ?>"></option>
-                                        <?php endfor ?>
-                                    </datalist>
                                     <datalist id="listBulanOption">
                                         <?php for ($j = 1; $j < 13; $j++) : ?>
                                             <option value="<?= $j; ?>"></option>
@@ -107,24 +109,48 @@
                         </tr>
                         <tr>
                             <th>Jabatan</th>
-                            <td><input type="text" name="jabatan" value="<?= (!$edit ? "" : $umum['id_jabatan'] . " - ") . $umum['nama_jabatan'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="jabatan" list="listJabatanOption" value="<?= (!$edit ? "" : $umum['id_jabatan'] . " - ") . $umum['nama_jabatan'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
 
                         </tr>
                         <tr>
                             <th>Satuan Kerja</th>
-                            <td><input type="text" name="id_satker" value="<?= (!$edit ? "" : $umum['id_satker'] . " - ") . $umum['nama_satker'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="id_satker" list="listSatkerOption" value="<?= (!$edit ? "" : $umum['id_satker'] . " - ") . $umum['nama_satker'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <datalist id="listSatkerOption">
+                                <?php foreach ($satker as $row) : ?>
+
+                                    <option value="<?= $row['id_satker'] . " - " . $row['nama_satker'] ?>"> </option>
+
+                                <?php endforeach; ?>
+                            </datalist>
 
                         </tr>
                         <tr>
                             <th>Bagian</th>
-                            <td><input type="text" name="id_bagian" value="<?= (!$edit ? "" : $umum['id_bagian'] . " - ") . $umum['nama_bagian'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="id_bagian" list="listBagianOption" value="<?= (!$edit ? "" : $umum['id_bagian'] . " - ") . $umum['nama_bagian'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
 
                         </tr>
                         <tr>
                             <th>Sub Bagian</th>
-                            <td><input type="text" name="id_subbag" value="<?= (!$edit ? "" : $umum['id_subbag'] . " - ") . $umum['nama_subbag'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
-
+                            <td><input type="text" name="id_subbag" list="listSubbagOption" value="<?= (!$edit ? "" : $umum['id_subbag'] . " - ") . $umum['nama_subbag'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
                         </tr>
+
+
+                        <datalist id="listBagianOption">
+                            <?php foreach ($bagian as $row) : ?>
+
+                                <option value="<?= $row['id_bagian'] . " - " . $row['nama_bagian'] ?>"> </option>
+
+                            <?php endforeach; ?>
+                        </datalist>
+
+                        <datalist id="listSubbagOption">
+                            <?php foreach ($subbag as $row) : ?>
+
+                                <option value="<?= $row['id_subbag'] . " - " . $row['nama_subbag'] ?>"> </option>
+
+                            <?php endforeach; ?>
+                        </datalist>
+
                     </table>
                 </div>
             </div>
