@@ -242,7 +242,7 @@ class Menu extends BaseController
 		return redirect()->to(base_url('/tambah_data_pegawai'));
 	}
 
-	public function lihatDetail($nip)
+	public function lihatDetail($nip, $edit = null)
 	{
 		$dataUmum = $this->poldaModel->lihatDetailPegawai($nip);
 		// d($dataUmum);
@@ -257,9 +257,17 @@ class Menu extends BaseController
 			'sk' => 'no_sk', 'golongan' => 'id_golongan', 'pangkat' => 'pangkat', 'tahun' => 'tahun'
 		];
 
+		$fieldRwyPendidikan = [];
+
 		$data = [
 			'title' => 'Detail PNS',
 			'umum' => $dataUmum[0],
+			'edit' => $edit,
+			'jabatan' => $this->poldaModel->getAllData('jabatan'),
+			'pangkat_golongan' => $this->poldaModel->getAllData('golongan_pangkat'),
+			'satker' => $this->poldaModel->getAllData('satker'),
+			'bagian' => $this->poldaModel->getAllData('bagian'),
+			'subbag' => $this->poldaModel->getAllData('subbag'),
 			'colRwyPenempatan' => $fieldRwyPenempatan,
 			'colRwyJabatan' => $fieldRwyJabatan,
 			'colRwyGolongan' => $fieldRwyGolongan,
@@ -368,5 +376,105 @@ class Menu extends BaseController
 		header('Cache-Control: max-age=0');
 
 		$writer->save('php://output');
+	}
+
+	public function updateDetail()
+	{
+		// field to be inputed by data specified by table
+		$fieldPegawai = $this->poldaModel->getTableCollumn('pegawai');	// all field of table pegawai
+		$fieldPenempatan = ['id_riwayat_penempatan', 'nip', 'id_satker', 'id_bagian', 'id_subbag', 'tanggal_mulai'];
+		$fieldJabatan = ['id_riwayat_jabatan', 'nip', 'id_jabatan', 'tahun'];
+		$fieldGolongan = ['id_riwayat_golongan', 'nip', 'id_golongan', 'tahun'];
+
+		$dataPegawai = array();
+		$dataPenempatan = array();
+		$dataJabatan = array();
+		$dataGolongan = array();
+
+		// format untuk tabel pegawai
+		$tahunLahir = $this->request->getVar('tahun_lahir');
+		$bulanLahir = $this->request->getVar('bulan_lahir');
+		$tanggalLahir = $this->request->getVar('tanggal_lahir');
+		$ttl = $tahunLahir . "-" . $bulanLahir . "-" . $tanggalLahir;
+		$jabatan = explode(" ", $this->request->getVar('jabatan'));
+		$golongan = explode(" ", $this->request->getVar('pangkat_gol'));
+		$satker = explode(" ", $this->request->getVar('id_satker'));
+		$bagian = explode(" ", $this->request->getVar('id_bagian'));
+		$subbag = explode(" ", $this->request->getVar('id_subbag'));
+
+		foreach ($fieldPegawai as $field) {
+			if ($field == 'ttl') {
+				$dataPegawai[$field] = $ttl;
+			} elseif ($field == 'jabatan') {
+				$dataPegawai[$field] = $jabatan[0];
+			} elseif ($field == 'id_satker') {
+				$dataPegawai[$field] = $satker[0];
+			} elseif ($field === "id_bagian") {
+				$dataPegawai[$field] = $bagian[0];
+			} elseif ($field == 'id_subbag') {
+				$dataPegawai[$field] = $subbag[0];
+			} else {
+				$dataPegawai[$field] = $this->request->getVar($field);
+			}
+		}
+
+
+		foreach ($fieldPenempatan as $field) {
+			if ($field == 'id_satker') {
+				$dataPenempatan[$field] = $satker[0];
+			} elseif ($field === "id_bagian") {
+				$dataPenempatan[$field] = $bagian[0];
+			} elseif ($field == 'id_subbag') {
+				$dataPenempatan[$field] = $subbag[0];
+			} elseif ($field == 'tanggal_mulai') {
+				$dataPenempatan[$field] = '1000/01/02';
+			} else {
+				$dataPenempatan[$field] = $this->request->getVar($field);
+			}
+		}
+
+		foreach ($fieldJabatan as $field) {
+			if ($field == 'id_jabatan') {
+				$dataJabatan[$field] = $jabatan[0];
+			} elseif ($field == 'tahun') {
+				$dataJabatan[$field] = '1000';
+			} else {
+				$dataJabatan[$field] = $this->request->getVar($field);
+			}
+		}
+
+		foreach ($fieldGolongan as $field) {
+			if ($field == 'id_golongan') {
+				$dataGolongan[$field] = $golongan[0];
+			} elseif ($field == 'tahun') {
+				$dataGolongan[$field] = '1000';
+			} else {
+				$dataGolongan[$field] = $this->request->getVar($field);
+			}
+		}
+
+		// dd($dataPegawai);
+
+		try {
+			if (
+				$this->poldaModel->updateDataArray('pegawai', $dataPegawai) > 0 &&
+				$this->poldaModel->updateDataRiwayat('riwayat_penempatan', $dataPenempatan) > 0 &&
+				$this->poldaModel->updateDataRiwayat('riwayat_jabatan', $dataJabatan) > 0 &&
+				$this->poldaModel->updateDataRiwayat('riwayat_golongan', $dataGolongan) > 0
+			) {
+				session()->setFlashData('success', 'Tambah data berhasil!');
+			} else {
+				session()->setFlashData('error', 'Tambah data gagal!');
+			}
+		} catch (\Exception $e) {
+			session()->setFlashData('error', $e->getMessage());
+		}
+
+		return redirect()->to(base_url('/lihatdetail/' . $dataPegawai['nip']));
+	}
+
+	public function test()
+	{
+		dd($this->request->getVar());
 	}
 }

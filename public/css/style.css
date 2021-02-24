@@ -11,7 +11,7 @@
 }
 
 input[type="text"]:disabled {
-  /* border: none; */
+  border: none;
   text-transform: uppercase;
   background-color: transparent;
 }
@@ -20,10 +20,10 @@ input[type="text"]:disabled {
   font-size: 11px;
 }
 
-.ttl td input {
+/* .ttl td input {
   max-width: fit-content;
   background-color: transparent;
-}
+} */
 
 .ttl td .ttl2 {
   max-width: 80px;

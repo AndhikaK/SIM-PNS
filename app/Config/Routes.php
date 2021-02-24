@@ -35,9 +35,11 @@ $routes->get('/', 'Menu::index');
 $routes->get('/beranda', 'Menu::index');
 $routes->get('/data_pegawai', 'Menu::dataPegawai');
 $routes->get('/detail_pegawai/(:segment)', 'Menu::lihatDetail/$1');
+$routes->get('/detail_pegawai/(:segment)/(:segment)', 'Menu::lihatDetail/$1/$2');
 $routes->get('/tambah_data', 'Menu::tambahdatapegawai');
 $routes->get('/tambah_data_pegawai', 'Menu::tambah_pegawai');
 $routes->get('/data_master/(:segment)', 'Menu::datamaster/$1');
+$routes->get('/update-detail', 'Menu::updateDetail');
 
 /*
  * --------------------------------------------------------------------

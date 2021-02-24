@@ -26,6 +26,25 @@ class PoldaModel extends Model
         return $this->affectedRows();
     }
 
+    public function updateDataArray($table, $data)
+    {
+        d($table, $data);
+        $builder = $this->db->table($table);
+        $builder->where('nip', $data['nip']);
+        $builder->update($data);
+
+        return 2;
+    }
+
+    public function updateDataRiwayat($table, $data)
+    {
+        $builder = $this->db->table($table);
+        $builder->where('id_' . $table, $data['id_' . $table]);
+        $builder->update($data);
+
+        return 2;
+    }
+
     public function deleteData($id, $field, $table)
     {
         $builder = $this->db->table($table);
