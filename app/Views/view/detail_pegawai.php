@@ -9,14 +9,15 @@
     <h1>Data Pegawai</h1>
 
     <form action="<?= base_url('/menu/updatedetail') ?>" method="POST">
+
         <?php if ($edit == null) : ?>
-            <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit') ?>" class="uk-button uk-button-small btn-primary text-white">Edit</a>
+            <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit-bio') ?>" class="uk-button uk-button-small btn-primary text-white">Edit</a>
         <?php else : ?>
-            <!-- <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit') ?>" class="uk-button uk-button-small btn-warning   ">simpan</a> -->
             <button type="submit" class="uk-button uk-button-small btn-warning">simpan</button>
             <a href="<?= base_url('/detail_pegawai/' . $umum['nip']) ?>" class="uk-button uk-button-small btn-danger text-white">batal</a>
         <?php endif; ?>
         <div class="uk-padding-small uk-child-width-1-3@s" uk-grid>
+
 
             <input type="text" value="<?= $umum['id_riwayat_golongan'] ?>" name="id_riwayat_golongan" hidden>
             <input type="text" value="<?= $umum['id_riwayat_penempatan'] ?>" name="id_riwayat_penempatan" hidden>
@@ -34,11 +35,11 @@
                     <table class="uk-table uk-margin-small-left uk-table-striped">
                         <tr>
                             <th>NIP</th>
-                            <td><input type="text" name="nip" value="<?= $umum['nip'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="nip" value="<?= $nip ?>" autocomplete="off" <?= $edit == 'edit-bio' ? 'readonly' : 'disabled' ?>></td>
                         </tr>
                         <tr>
                             <th>Nama Pegawai</th>
-                            <td><input type="text" name="nama_pegawai" value="<?= $umum['nama_pegawai'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="nama_pegawai" value="<?= $umum['nama_pegawai'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
                         </tr>
                         <tr class="ttl">
                             <th>Tempat, Tanggal Lahir</th>
@@ -49,22 +50,22 @@
 
                             <?php if ($edit == null) : ?>
                                 <td>
-                                    <input type="text" name="tempat_lahir" value="<?= $umum['tempat_lahir'] ?>" <?= $edit == null ? "disabled" : "" ?>>
-                                    <input class="ttl2" type="text" name="ttl" value="<?= $ttl ?>" <?= $edit == null ? "disabled" : "" ?>>
+                                    <input type="text" name="tempat_lahir" value="<?= $umum['tempat_lahir'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
+                                    <input class="ttl2" type="text" name="ttl" value="<?= $ttl ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
                                 </td>
                             <?php else : ?>
                                 <td>
-                                    <input type="text" name="tempat_lahir" value="<?= $umum['tempat_lahir'] ?>" <?= $edit == null ? "disabled" : "" ?>>
+                                    <input type="text" name="tempat_lahir" value="<?= $umum['tempat_lahir'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
                                     <div>
-                                        <input class="ttl2" type="text" list="listTanggalOption" name="tanggal_lahir" value="<?= $ttlExplode[2] ?>" <?= $edit == null ? "disabled" : "" ?>>
+                                        <input class="ttl2" type="text" list="listTanggalOption" name="tanggal_lahir" value="<?= $ttlExplode[2] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
                                         <datalist id="listTanggalOption">
                                             <?php for ($j = 1; $j < 32; $j++) : ?>
                                                 <option value="<?= $j; ?>"></option>
                                             <?php endfor ?>
                                         </datalist>
                                     </div>
-                                    <input class="ttl2" type="text" list="listBulanOption" name="bulan_lahir" value="<?= $ttlExplode[1] ?>" <?= $edit == null ? "disabled" : "" ?>>
-                                    <input class="ttl2" type="text" list="listTahunOption" name="tahun_lahir" value="<?= $ttlExplode[0] ?>" <?= $edit == null ? "disabled" : "" ?>>
+                                    <input class="ttl2" type="text" list="listBulanOption" name="bulan_lahir" value="<?= $ttlExplode[1] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
+                                    <input class="ttl2" type="text" list="listTahunOption" name="tahun_lahir" value="<?= $ttlExplode[0] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
 
                                     <datalist id="listBulanOption">
                                         <?php for ($j = 1; $j < 13; $j++) : ?>
@@ -81,15 +82,27 @@
                         </tr>
                         <tr>
                             <th>Alamat</th>
-                            <td><input type="text" name="alamat" value="<?= $umum['alamat'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="alamat" value="<?= $umum['alamat'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
                         </tr>
                         <tr>
                             <th>Jenis Kelamin</th>
-                            <td><input type="text" name="jenis_kelamin" value="<?= $umum['jenis_kelamin'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" list="listGenderOption" name="jenis_kelamin" value="<?= $umum['jenis_kelamin'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
+                            <datalist id="listGenderOption">
+                                <option value="LAKI-LAKI"></option>
+                                <option value="PEREMPUAN"></option>
+                            </datalist>
                         </tr>
                         <tr>
                             <th>Agama</th>
-                            <td><input type="text" name="agama" value="<?= $umum['agama'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" list="listAgamaOption" name="agama" value="<?= $umum['agama'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
+                            <datalist id="listAgamaOption">
+                                <option value="ISLAM"></option>
+                                <option value="PROTESTAN"></option>
+                                <option value="KATOLIK"></option>
+                                <option value="HINDU"></option>
+                                <option value="BUDHA"></option>
+                                <option value="KONG HU CHU"></option>
+                            </datalist>
                         </tr>
                     </table>
                 </div>
@@ -98,23 +111,23 @@
                     <table class="uk-table">
                         <tr>
                             <th>NIK</th>
-                            <td><input type="text" name="nik" value="<?= $umum['nik'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="nik" value="<?= $umum['nik'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
                         </tr>
                         <tr>
                             <th>Golongan dan Pangkat</th>
                             <td class="">
-                                <input type="text" class="golongan" name="pangkat_gol" value="<?= $umum['id_golongan'] . " - " . $umum['pangkat'] ?>" <?= $edit == null ? "disabled" : "" ?>>
-                                <!-- <input class="ttl2" class="nama_pangkat" type="text" name="pangkat" value="<?= $umum['pangkat'] ?>" <?= $edit == null ? "disabled" : "" ?>> -->
+                                <input type="text" list="listPangkatOption" class="golongan" name="pangkat_gol" value="<?= $umum['id_golongan'] . " - " . $umum['pangkat'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
+                                <!-- <input class="ttl2" class="nama_pangkat" type="text" name="pangkat" value="<?= $umum['pangkat'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"> -->
                             </td>
                         </tr>
                         <tr>
                             <th>Jabatan</th>
-                            <td><input type="text" name="jabatan" list="listJabatanOption" value="<?= (!$edit ? "" : $umum['id_jabatan'] . " - ") . $umum['nama_jabatan'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="jabatan" list="listJabatanOption" value="<?= (!$edit ? "" : $umum['id_jabatan'] . " - ") . $umum['nama_jabatan'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
 
                         </tr>
                         <tr>
                             <th>Satuan Kerja</th>
-                            <td><input type="text" name="id_satker" list="listSatkerOption" value="<?= (!$edit ? "" : $umum['id_satker'] . " - ") . $umum['nama_satker'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="id_satker" list="listSatkerOption" value="<?= (!$edit ? "" : $umum['id_satker'] . " - ") . $umum['nama_satker'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
                             <datalist id="listSatkerOption">
                                 <?php foreach ($satker as $row) : ?>
 
@@ -126,12 +139,12 @@
                         </tr>
                         <tr>
                             <th>Bagian</th>
-                            <td><input type="text" name="id_bagian" list="listBagianOption" value="<?= (!$edit ? "" : $umum['id_bagian'] . " - ") . $umum['nama_bagian'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="id_bagian" list="listBagianOption" value="<?= (!$edit ? "" : $umum['id_bagian'] . " - ") . $umum['nama_bagian'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
 
                         </tr>
                         <tr>
                             <th>Sub Bagian</th>
-                            <td><input type="text" name="id_subbag" list="listSubbagOption" value="<?= (!$edit ? "" : $umum['id_subbag'] . " - ") . $umum['nama_subbag'] ?>" <?= $edit == null ? "disabled" : "" ?>></td>
+                            <td><input type="text" name="id_subbag" list="listSubbagOption" value="<?= (!$edit ? "" : $umum['id_subbag'] . " - ") . $umum['nama_subbag'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
                         </tr>
 
 
@@ -139,6 +152,22 @@
                             <?php foreach ($bagian as $row) : ?>
 
                                 <option value="<?= $row['id_bagian'] . " - " . $row['nama_bagian'] ?>"> </option>
+
+                            <?php endforeach; ?>
+                        </datalist>
+
+                        <datalist id="listPangkatOption">
+                            <?php foreach ($pangkat_golongan as $row) : ?>
+
+                                <option value="<?= $row['id_golongan'] . " - " . $row['pangkat'] ?>"> </option>
+
+                            <?php endforeach; ?>
+                        </datalist>
+
+                        <datalist id="listJabatanOption">
+                            <?php foreach ($jabatan as $row) : ?>
+
+                                <option value="<?= $row['id_jabatan'] . " - " . $row['nama_jabatan'] ?>"> </option>
 
                             <?php endforeach; ?>
                         </datalist>
@@ -155,7 +184,14 @@
                 </div>
             </div>
         </div>
-        <hr class="uk-divider-icon">
+    </form>
+
+
+    <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
+    <hr class="uk-divider-icon">
+
+
+    <form action="">
         <div class="uk-padding-large-bottom riwayat-container">
             <ul class="uk-subnav uk-subnav-pill" uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
                 <li><a href="#">Riwayat Jabatan</a></li>
@@ -240,6 +276,7 @@
                 <li>Bazinga!</li>
             </ul>
     </form>
+
 </div>
 </div>
 

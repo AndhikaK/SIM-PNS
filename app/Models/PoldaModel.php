@@ -56,7 +56,7 @@ class PoldaModel extends Model
     public function lihatDetailPegawai($nip)
     {
         $query = "SELECT 
-            p.*, satker.nama_satker, bagian.nama_bagian, subbag.nama_subbag, q.*, r.*, s.*, golongan_pangkat.*, jabatan.*
+            p.nip, p.*, satker.nama_satker, bagian.nama_bagian, subbag.nama_subbag, q.*, r.*, s.*, golongan_pangkat.*, jabatan.*
             FROM 
                     pegawai p
                 LEFT OUTER JOIN (

@@ -245,7 +245,6 @@ class Menu extends BaseController
 	public function lihatDetail($nip, $edit = null)
 	{
 		$dataUmum = $this->poldaModel->lihatDetailPegawai($nip);
-		// d($dataUmum);
 		$fieldRwyPenempatan = [
 			'sk' => 'no_sk', 'satker' => 'nama_satker', 'bagian' => 'nama_bagian', 'subbag' => 'nama_subbag', 'mulai' => 'tanggal_mulai', 'selesai' => 'tanggal_selesai'
 		];
@@ -263,6 +262,7 @@ class Menu extends BaseController
 			'title' => 'Detail PNS',
 			'umum' => $dataUmum[0],
 			'edit' => $edit,
+			'nip' => $nip,
 			'jabatan' => $this->poldaModel->getAllData('jabatan'),
 			'pangkat_golongan' => $this->poldaModel->getAllData('golongan_pangkat'),
 			'satker' => $this->poldaModel->getAllData('satker'),
@@ -276,6 +276,7 @@ class Menu extends BaseController
 			'riwayatGolongan' => $this->rwyGolonganModel->getRiwayat($dataUmum[0]['nip'])
 
 		];
+
 
 		return view('view/detail_pegawai', $data);
 	}
@@ -470,7 +471,8 @@ class Menu extends BaseController
 			session()->setFlashData('error', $e->getMessage());
 		}
 
-		return redirect()->to(base_url('/menu/lihatdetail/' . $dataPegawai['nip']));
+		// dd('kesini gk lo');
+		return redirect()->to(base_url('detail_pegawai/' . $dataPegawai['nip']));
 	}
 
 	public function test()
