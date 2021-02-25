@@ -3,8 +3,6 @@
 <?= $this->section('content') ?>
 
 
-<?= d($umum) ?>
-
 <div class="uk-container container-detail-data">
     <h1>Data Pegawai</h1>
 
@@ -28,6 +26,7 @@
                 <div class="uk-background-primary">
                     <img width="100" height="150" alt="" uk-img="data-src:" uk-svg>
                 </div>
+
             </div>
 
             <div class="detail uk-width-auto@m" uk-grid>
@@ -260,10 +259,14 @@
                                 <?php foreach ($colRwyPenempatan as $name => $col) : ?>
                                     <!-- <td><?= strtoupper($item[$col]) ?></td> -->
                                     <td>
-                                        <!-- <input type="text" name="<?= $col ?>" list="listSubbagOption" value="<?= ($edit == "edit-bio" ? "" : $umum['id_subbag'] . " - ") . $umum['nama_subbag'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"> -->
-                                        <input type="text" name="<?= $col ?>" value="<?= strtoupper($item[$col]) ?>" <?= $edit == 'edit-rwy-pnm-' . $item['id_riwayat_penempatan'] ? "" : "disabled"  ?>>
+                                        <?php if ($name == "satker" || $name == "bagian" || $name == "subbag") : ?>
+                                            <input type="text" list="<?= 'list' . ucwords($name) . 'Option' ?>" name="<?= 'id_' . $name ?>" value="<?= $item['id_' . $name] . " - " . $item['nama_' . $name] ?>" <?= $edit == 'edit-rwy-pnm-' . $item['id_riwayat_penempatan'] ? "" : "disabled"  ?> autocomplete="off">
+                                        <?php else : ?>
+                                            <input type="text" name="<?= $col ?>" value="<?= strtoupper($item[$col]) ?>" <?= $edit == 'edit-rwy-pnm-' . $item['id_riwayat_penempatan'] ? "" : "disabled"  ?>>
+                                        <?php endif; ?>
                                     </td>
                                 <?php endforeach; ?>
+                                <input type="text" name="nip" value="<?= $nip ?>" hidden>
                                 <input type="text" value="<?= $item['id_riwayat_penempatan'] ?>" name="id_riwayat_penempatan" hidden>
                                 <input type="text" value="riwayat_penempatan" name="table" hidden>
                             </tr>
@@ -302,6 +305,4 @@
 
     </div>
 </div>
-<?= d($riwayatPenempatan) ?>
-<?= d($colRwyPenempatan) ?>
 <?= $this->endSection(); ?>

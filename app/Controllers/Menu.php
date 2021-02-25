@@ -477,16 +477,38 @@ class Menu extends BaseController
 
 	public function editItemRiwayat()
 	{
+
 		$table = $this->request->getVar('table');
 		$tableCol = $this->poldaModel->getTableCollumn($table);
 
 		$dataRiwayat = array();
 
+		$jabatan = explode(" ", $this->request->getVar('jabatan'));
+		$golongan = explode(" ", $this->request->getVar('pangkat_gol'));
+		$satker = explode(" ", $this->request->getVar('id_satker'));
+		$bagian = explode(" ", $this->request->getVar('id_bagian'));
+		$subbag = explode(" ", $this->request->getVar('id_subbag'));
+
 		foreach ($tableCol as $field) {
-			$dataRiwayat[$field] = $this->request->getVar($field);
+			if ($field == 'id_satker') {
+				$dataRiwayat[$field] = $satker[0];
+			} elseif ($field === "id_bagian") {
+				$dataRiwayat[$field] = $bagian[0];
+			} elseif ($field == 'id_subbag') {
+				$dataRiwayat[$field] = $subbag[0];
+			} elseif ($field == 'id_jabatan') {
+				$dataRiwayat[$field] = $jabatan[0];
+			} elseif ($field == 'id_golongan') {
+				$dataRiwayat[$field] = $golongan[0];
+			} else {
+				$dataRiwayat[$field] = $this->request->getVar($field);
+			}
 		}
 
-		dd($dataRiwayat);
+		try {
+			$this->poldaModel->updateItemRiwayatTable($table, $dataRiwayat);
+		} catch (\Exception $e) {
+		}
 	}
 
 	public function test()

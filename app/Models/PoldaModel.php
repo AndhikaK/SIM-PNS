@@ -45,6 +45,13 @@ class PoldaModel extends Model
         return 2;
     }
 
+    public function updateItemRiwayatTable($table, $data)
+    {
+        $builder = $this->db->table($table);
+        $builder->where('id_' . $table, $data['id_' . $table])
+            ->update($data);
+    }
+
     public function deleteData($id, $field, $table)
     {
         $builder = $this->db->table($table);
