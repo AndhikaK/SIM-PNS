@@ -52,6 +52,10 @@ class PoldaModel extends Model
             ->update($data);
     }
 
+    public function addItemRiwayatTable()
+    {
+    }
+
     public function deleteData($id, $field, $table)
     {
         $builder = $this->db->table($table);

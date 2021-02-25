@@ -272,8 +272,33 @@
                             </tr>
                             </form>
                         <?php endforeach; ?>
+
+                        <?php if ($edit == 'add-rwy-pnm') : ?>
+                            <tr>
+                                <td><?= $i++; ?></td>
+                                <td>
+                                    <form action="<?= base_url('/menu/addItemRiwayat') ?>" method="POST">
+                                        <button type="submit">nice!</button>
+                                </td>
+
+                                <?php foreach ($colRwyPenempatan as $name => $col) : ?>
+                                    <td>
+                                        <?php if ($name == "satker" || $name == "bagian" || $name == "subbag") : ?>
+                                            <input type="text" list="<?= 'list' . ucwords($name) . 'Option' ?>" name="<?= 'id_' . $name ?>" autocomplete="off">
+                                        <?php else : ?>
+                                            <input type="text" name="<?= $col ?>">
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endforeach; ?>
+                                <input type="text" name="nip" value="<?= $nip ?>" hidden>
+                                <input type="text" value="riwayat_penempatan" name="table" hidden>
+                            </tr>
+                            </form>
+                        <?php endif ?>
+
                     </tbody>
                 </table>
+                <a href="<?= base_url('/menu/lihatdetail/' . $nip . '/add-rwy-pnm') ?>" class="uk-button ">Tambah data baru</a>
             </li>
             <li>
                 <table class="uk-table">
@@ -298,6 +323,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <a href="<?= base_url('/menu/lihatdetail/' . $nip . '/add-rwy-pdd') ?>" class="uk-button ">Tambah data baru</a>
             </li>
             <li>Bazinga!</li>
         </ul>

@@ -471,7 +471,6 @@ class Menu extends BaseController
 			session()->setFlashData('error', $e->getMessage());
 		}
 
-		// dd('kesini gk lo');
 		return redirect()->to(base_url('detail_pegawai/' . $dataPegawai['nip']));
 	}
 
@@ -507,8 +506,51 @@ class Menu extends BaseController
 
 		try {
 			$this->poldaModel->updateItemRiwayatTable($table, $dataRiwayat);
+			session()->setFlashData('success', 'Update data berhasil!');
 		} catch (\Exception $e) {
+			session()->setFlashData('error', $e->getMessage());
 		}
+
+		return redirect()->to(base_url('detail_pegawai/' . $dataRiwayat['nip']));
+	}
+
+	public function addItemRiwayat()
+	{
+		$table = $this->request->getVar('table');
+		$tableCol = $this->poldaModel->getTableCollumn($table);
+
+		$dataRiwayat = array();
+
+		$jabatan = explode(" ", $this->request->getVar('jabatan'));
+		$golongan = explode(" ", $this->request->getVar('pangkat_gol'));
+		$satker = explode(" ", $this->request->getVar('id_satker'));
+		$bagian = explode(" ", $this->request->getVar('id_bagian'));
+		$subbag = explode(" ", $this->request->getVar('id_subbag'));
+
+		foreach ($tableCol as $field) {
+			if ($field == 'id_satker') {
+				$dataRiwayat[$field] = $satker[0];
+			} elseif ($field === "id_bagian") {
+				$dataRiwayat[$field] = $bagian[0];
+			} elseif ($field == 'id_subbag') {
+				$dataRiwayat[$field] = $subbag[0];
+			} elseif ($field == 'id_jabatan') {
+				$dataRiwayat[$field] = $jabatan[0];
+			} elseif ($field == 'id_golongan') {
+				$dataRiwayat[$field] = $golongan[0];
+			} else {
+				$dataRiwayat[$field] = $this->request->getVar($field);
+			}
+		}
+
+		try {
+			$this->poldaModel->insertDataArray($table, $dataRiwayat);
+			session()->setFlashData('success', 'Update data berhasil!');
+		} catch (\Exception $e) {
+			session()->setFlashData('error', $e->getMessage());
+		}
+
+		return redirect()->to(base_url('detail_pegawai/' . $dataRiwayat['nip']));
 	}
 
 	public function test()
