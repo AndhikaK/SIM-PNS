@@ -55,12 +55,8 @@
                                     <td class="text-center"> <?= strtoupper($row["$field"]) ?> </td>
                                 <?php endforeach; ?>
                                 <td>
-
-                                    <span class="material-icons text-primary">
-                                        create
-                                    </span>
-
-                                    <a href="<?= base_url("/menu/delete/" . $row[$fields[0]] . "/" . $fields[0] . "/" . $dropdownItem) ?>"><span class="material-icons text-danger">delete</span></a>
+                                    <a href="#" class="uk-icon-link uk-margin-small-right text-primary" uk-icon="file-edit"></a>
+                                    <a href="<?= base_url("/menu/delete/" . $row[$fields[0]] . "/" . $fields[0] . "/" . $dropdownItem) ?>" class="uk-icon-link text-danger" uk-icon="trash"></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

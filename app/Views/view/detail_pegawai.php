@@ -11,10 +11,10 @@
     <form action="<?= base_url('/menu/updatedetail') ?>" method="POST">
 
         <?php if ($edit == null) : ?>
-            <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit-bio') ?>" class="uk-button uk-button-small btn-primary text-white">Edit</a>
-        <?php else : ?>
             <button type="submit" class="uk-button uk-button-small btn-warning">simpan</button>
             <a href="<?= base_url('/detail_pegawai/' . $umum['nip']) ?>" class="uk-button uk-button-small btn-danger text-white">batal</a>
+        <?php else : ?>
+            <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit-bio') ?>" class="uk-button uk-button-small btn-primary text-white">Edit</a>
         <?php endif; ?>
         <div class="uk-padding-small uk-child-width-1-3@s" uk-grid>
 
@@ -122,12 +122,12 @@
                         </tr>
                         <tr>
                             <th>Jabatan</th>
-                            <td><input type="text" name="jabatan" list="listJabatanOption" value="<?= (!$edit ? "" : $umum['id_jabatan'] . " - ") . $umum['nama_jabatan'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
+                            <td><input type="text" name="jabatan" list="listJabatanOption" value="<?= ($edit == "edit-bio" ? "" : $umum['id_jabatan'] . " - ") . $umum['nama_jabatan'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
 
                         </tr>
                         <tr>
                             <th>Satuan Kerja</th>
-                            <td><input type="text" name="id_satker" list="listSatkerOption" value="<?= (!$edit ? "" : $umum['id_satker'] . " - ") . $umum['nama_satker'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
+                            <td><input type="text" name="id_satker" list="listSatkerOption" value="<?= ($edit == "edit-bio" ? "" : $umum['id_satker'] . " - ") . $umum['nama_satker'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
                             <datalist id="listSatkerOption">
                                 <?php foreach ($satker as $row) : ?>
 
@@ -139,12 +139,12 @@
                         </tr>
                         <tr>
                             <th>Bagian</th>
-                            <td><input type="text" name="id_bagian" list="listBagianOption" value="<?= (!$edit ? "" : $umum['id_bagian'] . " - ") . $umum['nama_bagian'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
+                            <td><input type="text" name="id_bagian" list="listBagianOption" value="<?= ($edit == "edit-bio" ? "" : $umum['id_bagian'] . " - ") . $umum['nama_bagian'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
 
                         </tr>
                         <tr>
                             <th>Sub Bagian</th>
-                            <td><input type="text" name="id_subbag" list="listSubbagOption" value="<?= (!$edit ? "" : $umum['id_subbag'] . " - ") . $umum['nama_subbag'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
+                            <td><input type="text" name="id_subbag" list="listSubbagOption" value="<?= ($edit == "edit-bio" ? "" : $umum['id_subbag'] . " - ") . $umum['nama_subbag'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"></td>
                         </tr>
 
 
@@ -190,94 +190,118 @@
     <!-- //////////////////////////////////////////////////////////////////////////////////////////// -->
     <hr class="uk-divider-icon">
 
+    <?php $switcher = '' ?>
+    <?php if (str_contains($edit, "rwy")) {
+        $switcherState = explode("-", $edit);
+        $switcher = $switcherState[2];
+    } ?>
 
-    <form action="">
-        <div class="uk-padding-large-bottom riwayat-container">
-            <ul class="uk-subnav uk-subnav-pill" uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
-                <li><a href="#">Riwayat Jabatan</a></li>
-                <li><a href="#">Riwayat Penempatan</a></li>
-                <li><a href="#">Riwayat Golongan dan Pangkat</a></li>
-                <li><a href="#">Riwayat Pendidikan</a></li>
-            </ul>
 
-            <ul class="uk-switcher uk-margin uk-margin-large-bottom detail-riwayat">
-                <li>
-                    <table class="uk-table">
-                        <thead>
+    <div class="uk-padding-large-bottom riwayat-container">
+        <ul class="uk-subnav uk-subnav-pill" uk-switcher="animation: uk-animation-slide-left-medium, uk-animation-slide-right-medium">
+            <li class="<?= $switcher == "jbt" ? "uk-active" : "" ?>"><a href="#">Riwayat Jabatan</a></li>
+            <li class="<?= $switcher == "pnm" ? "uk-active" : "" ?>"><a href="#">Riwayat Penempatan</a></li>
+            <li class="<?= $switcher == "gol" ? "uk-active" : "" ?>"><a href="#">Riwayat Golongan dan Pangkat</a></li>
+            <li class="<?= $switcher == "pdd" ? "uk-active" : "" ?>"><a href="#">Riwayat Pendidikan</a></li>
+        </ul>
+
+        <ul class="uk-switcher uk-margin uk-margin-large-bottom detail-riwayat">
+            <li>
+                <table class="uk-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <?php foreach ($colRwyJabatan as $name => $value) : ?>
+                                <th><?= $name ?></th>
+                            <?php endforeach; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($riwayatJabatan as $item) : ?>
                             <tr>
-                                <th>No</th>
-                                <?php foreach ($colRwyJabatan as $name => $value) : ?>
-                                    <th><?= $name ?></th>
+                                <td><?= $i++; ?></td>
+
+                                <?php foreach ($colRwyJabatan as $col) : ?>
+                                    <td><?= strtoupper($item[$col]) ?></td>
                                 <?php endforeach; ?>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($riwayatJabatan as $item) : ?>
-                                <tr>
-                                    <td><?= $i++; ?></td>
-
-                                    <?php foreach ($colRwyJabatan as $col) : ?>
-                                        <td><?= strtoupper($item[$col]) ?></td>
-                                    <?php endforeach; ?>
-                                </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </li>
+            <li>
+                <table class="uk-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>action</th>
+                            <?php foreach ($colRwyPenempatan as $name => $value) : ?>
+                                <th><?= $name ?></th>
                             <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </li>
-                <li>
-                    <table class="uk-table">
-                        <thead>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php $i = 1; ?>
+                        <?php foreach ($riwayatPenempatan as $item) : ?>
                             <tr>
-                                <th>No</th>
-                                <?php foreach ($colRwyPenempatan as $name => $value) : ?>
-                                    <th><?= $name ?></th>
+                                <td><?= $i++; ?></td>
+                                <td>
+                                    <?php if ($edit != 'edit-rwy-pnm-' . $item['id_riwayat_penempatan']) : ?>
+                                        <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit-rwy-pnm-' . $item['id_riwayat_penempatan']) ?>" class="uk-icon-link uk-margin-small-right text-primary" uk-icon="file-edit"></a>
+                                        <a href="#" class="uk-icon-link text-danger" uk-icon="trash"></a>
+                                    <?php else : ?>
+                                        <form action="<?= base_url('/menu/editItemRiwayat') ?>" method="POST">
+                                            <button type="submit">nice!</button>
+                                        <?php endif; ?>
+                                </td>
+
+                                <?php foreach ($colRwyPenempatan as $name => $col) : ?>
+                                    <!-- <td><?= strtoupper($item[$col]) ?></td> -->
+                                    <td>
+                                        <!-- <input type="text" name="<?= $col ?>" list="listSubbagOption" value="<?= ($edit == "edit-bio" ? "" : $umum['id_subbag'] . " - ") . $umum['nama_subbag'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"> -->
+                                        <input type="text" name="<?= $col ?>" value="<?= strtoupper($item[$col]) ?>" <?= $edit == 'edit-rwy-pnm-' . $item['id_riwayat_penempatan'] ? "" : "disabled"  ?>>
+                                    </td>
+                                <?php endforeach; ?>
+                                <input type="text" value="<?= $item['id_riwayat_penempatan'] ?>" name="id_riwayat_penempatan" hidden>
+                                <input type="text" value="riwayat_penempatan" name="table" hidden>
+                            </tr>
+                            </form>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </li>
+            <li>
+                <table class="uk-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <?php foreach ($colRwyGolongan as $name => $value) : ?>
+                                <th><?= $name ?></th>
+                            <?php endforeach; ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($riwayatGolongan as $item) : ?>
+                            <tr>
+                                <td><?= $i++; ?></td>
+
+                                <?php foreach ($colRwyGolongan as $col) : ?>
+                                    <td><?= strtoupper($item[$col]) ?></td>
                                 <?php endforeach; ?>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($riwayatPenempatan as $item) : ?>
-                                <tr>
-                                    <td><?= $i++; ?></td>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </li>
+            <li>Bazinga!</li>
+        </ul>
 
-                                    <?php foreach ($colRwyPenempatan as $col) : ?>
-                                        <td><?= strtoupper($item[$col]) ?></td>
-                                    <?php endforeach; ?>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </li>
-                <li>
-                    <table class="uk-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <?php foreach ($colRwyGolongan as $name => $value) : ?>
-                                    <th><?= $name ?></th>
-                                <?php endforeach; ?>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($riwayatGolongan as $item) : ?>
-                                <tr>
-                                    <td><?= $i++; ?></td>
 
-                                    <?php foreach ($colRwyGolongan as $col) : ?>
-                                        <td><?= strtoupper($item[$col]) ?></td>
-                                    <?php endforeach; ?>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </li>
-                <li>Bazinga!</li>
-            </ul>
-    </form>
-
+    </div>
 </div>
-</div>
-
+<?= d($riwayatPenempatan) ?>
+<?= d($colRwyPenempatan) ?>
 <?= $this->endSection(); ?>

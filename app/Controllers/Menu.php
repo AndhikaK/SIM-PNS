@@ -475,6 +475,20 @@ class Menu extends BaseController
 		return redirect()->to(base_url('detail_pegawai/' . $dataPegawai['nip']));
 	}
 
+	public function editItemRiwayat()
+	{
+		$table = $this->request->getVar('table');
+		$tableCol = $this->poldaModel->getTableCollumn($table);
+
+		$dataRiwayat = array();
+
+		foreach ($tableCol as $field) {
+			$dataRiwayat[$field] = $this->request->getVar($field);
+		}
+
+		dd($dataRiwayat);
+	}
+
 	public function test()
 	{
 		dd($this->request->getVar());
