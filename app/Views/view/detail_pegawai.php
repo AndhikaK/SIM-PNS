@@ -8,7 +8,7 @@
 
     <form action="<?= base_url('/menu/updatedetail') ?>" method="POST">
 
-        <?php if ($edit == null) : ?>
+        <?php if ($edit == 'edit-bio') : ?>
             <button type="submit" class="uk-button uk-button-small btn-warning">simpan</button>
             <a href="<?= base_url('/detail_pegawai/' . $umum['nip']) ?>" class="uk-button uk-button-small btn-danger text-white">batal</a>
         <?php else : ?>
@@ -115,7 +115,7 @@
                         <tr>
                             <th>Golongan dan Pangkat</th>
                             <td class="">
-                                <input type="text" list="listPangkatOption" class="golongan" name="pangkat_gol" value="<?= $umum['id_golongan'] . " - " . $umum['pangkat'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
+                                <input type="text" list="listGolonganOption" class="golongan" name="pangkat_gol" value="<?= $umum['id_golongan'] . " - " . $umum['pangkat'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off">
                                 <!-- <input class="ttl2" class="nama_pangkat" type="text" name="pangkat" value="<?= $umum['pangkat'] ?>" <?= $edit == 'edit-bio' ? "" : "disabled" ?> autocomplete="off"> -->
                             </td>
                         </tr>
@@ -155,7 +155,7 @@
                             <?php endforeach; ?>
                         </datalist>
 
-                        <datalist id="listPangkatOption">
+                        <datalist id="listGolonganOption">
                             <?php foreach ($pangkat_golongan as $row) : ?>
 
                                 <option value="<?= $row['id_golongan'] . " - " . $row['pangkat'] ?>"> </option>
@@ -205,11 +205,13 @@
         </ul>
 
         <ul class="uk-switcher uk-margin uk-margin-large-bottom detail-riwayat">
+            <!-- ///////////////////////////////////ini jabatan ///////////////////////////////////////////////// -->
             <li>
                 <table class="uk-table">
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>action</th>
                             <?php foreach ($colRwyJabatan as $name => $value) : ?>
                                 <th><?= $name ?></th>
                             <?php endforeach; ?>
@@ -220,15 +222,61 @@
                         <?php foreach ($riwayatJabatan as $item) : ?>
                             <tr>
                                 <td><?= $i++; ?></td>
+                                <td>
+                                    <?php if ($edit != 'edit-rwy-jbt-' . $item['id_riwayat_jabatan']) : ?>
+                                        <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit-rwy-jbt-' . $item['id_riwayat_jabatan']) ?>" class="uk-icon-link uk-margin-small-right text-primary" uk-icon="file-edit"></a>
+                                        <a href="#" class="uk-icon-link text-danger" uk-icon="trash"></a>
+                                    <?php elseif ($edit) : ?>
+                                        <form action="<?= base_url('/menu/editItemRiwayat') ?>" method="POST">
+                                            <button type="submit">nice!</button>
+                                        <?php endif; ?>
+                                </td>
 
-                                <?php foreach ($colRwyJabatan as $col) : ?>
-                                    <td><?= strtoupper($item[$col]) ?></td>
+                                <?php foreach ($colRwyJabatan as $name => $col) : ?>
+                                    <td>
+                                        <?php if ($name == "jabatan") : ?>
+                                            <input type="text" list="<?= 'list' . ucwords($name) . 'Option' ?>" name="<?= 'id_' . $name ?>" value="<?= $item['id_' . $name] . " - " . $item['nama_' . $name] ?>" <?= $edit == 'edit-rwy-jbt-' . $item['id_riwayat_jabatan'] ? "" : "disabled"  ?> autocomplete="off">
+                                        <?php else : ?>
+                                            <input type="text" name="<?= $col ?>" value="<?= strtoupper($item[$col]) ?>" <?= $edit == 'edit-rwy-jbt-' . $item['id_riwayat_jabatan'] ? "" : "disabled"  ?>>
+                                        <?php endif; ?>
+                                    </td>
                                 <?php endforeach; ?>
+                                <input type="text" name="nip" value="<?= $nip ?>" hidden>
+                                <input type="text" value="<?= $item['id_riwayat_jabatan'] ?>" name="id_riwayat_jabatan" hidden>
+                                <input type="text" value="riwayat_jabatan" name="table" hidden>
                             </tr>
+                            </form>
                         <?php endforeach; ?>
+
+                        <?php if ($edit == 'add-rwy-jbt') : ?>
+                            <tr>
+                                <td><?= $i++; ?></td>
+                                <td>
+                                    <form action="<?= base_url('/menu/addItemRiwayat') ?>" method="POST">
+                                        <button type="submit">nice!</button>
+                                </td>
+
+                                <?php foreach ($colRwyJabatan as $name => $col) : ?>
+                                    <td class="d-inline">
+                                        <?php if ($name == "jabatan") : ?>
+                                            <input type="text" list="<?= 'list' . ucwords($name) . 'Option' ?>" name="<?= 'id_' . $name ?>" autocomplete="off">
+                                        <?php else : ?>
+                                            <input type="text" name="<?= $col ?>">
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endforeach; ?>
+                                <input type="text" name="nip" value="<?= $nip ?>" hidden>
+                                <input type="text" value="riwayat_jabatan" name="table" hidden>
+                            </tr>
+                            </form>
+                        <?php endif ?>
                     </tbody>
                 </table>
+                <a href="<?= base_url('/menu/lihatdetail/' . $nip . '/add-rwy-jbt') ?>" class="uk-button ">Tambah data baru</a>
             </li>
+
+            <!-- ///////////////////////////////////ini penempatan ///////////////////////////////////////////////// -->
+
             <li>
                 <table class="uk-table">
                     <thead>
@@ -246,9 +294,9 @@
                         <?php foreach ($riwayatPenempatan as $item) : ?>
                             <tr>
                                 <td><?= $i++; ?></td>
-                                <td>
+                                <td class="inline">
                                     <?php if ($edit != 'edit-rwy-pnm-' . $item['id_riwayat_penempatan']) : ?>
-                                        <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit-rwy-pnm-' . $item['id_riwayat_penempatan']) ?>" class="uk-icon-link uk-margin-small-right text-primary" uk-icon="file-edit"></a>
+                                        <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit-rwy-pnm-' . $item['id_riwayat_penempatan']) ?>" class="uk-icon-link text-primary" uk-icon="file-edit"></a>
                                         <a href="#" class="uk-icon-link text-danger" uk-icon="trash"></a>
                                     <?php else : ?>
                                         <form action="<?= base_url('/menu/editItemRiwayat') ?>" method="POST">
@@ -257,8 +305,7 @@
                                 </td>
 
                                 <?php foreach ($colRwyPenempatan as $name => $col) : ?>
-                                    <!-- <td><?= strtoupper($item[$col]) ?></td> -->
-                                    <td>
+                                    <td class="">
                                         <?php if ($name == "satker" || $name == "bagian" || $name == "subbag") : ?>
                                             <input type="text" list="<?= 'list' . ucwords($name) . 'Option' ?>" name="<?= 'id_' . $name ?>" value="<?= $item['id_' . $name] . " - " . $item['nama_' . $name] ?>" <?= $edit == 'edit-rwy-pnm-' . $item['id_riwayat_penempatan'] ? "" : "disabled"  ?> autocomplete="off">
                                         <?php else : ?>
@@ -300,30 +347,81 @@
                 </table>
                 <a href="<?= base_url('/menu/lihatdetail/' . $nip . '/add-rwy-pnm') ?>" class="uk-button ">Tambah data baru</a>
             </li>
+
+            <!-- ///////////////////////////////////ini golongan ///////////////////////////////////////////////// -->
+
+
             <li>
                 <table class="uk-table">
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>action</th>
                             <?php foreach ($colRwyGolongan as $name => $value) : ?>
                                 <th><?= $name ?></th>
                             <?php endforeach; ?>
                         </tr>
                     </thead>
                     <tbody>
+
+
                         <?php $i = 1; ?>
                         <?php foreach ($riwayatGolongan as $item) : ?>
                             <tr>
                                 <td><?= $i++; ?></td>
+                                <td class="inline">
+                                    <?php if ($edit != 'edit-rwy-gol-' . $item['id_riwayat_golongan']) : ?>
+                                        <a href="<?= base_url('/menu/lihatdetail/' . $umum['nip'] . '/edit-rwy-gol-' . $item['id_riwayat_golongan']) ?>" class="uk-icon-link text-primary" uk-icon="file-edit"></a>
+                                        <a href="#" class="uk-icon-link text-danger" uk-icon="trash"></a>
+                                    <?php else : ?>
+                                        <form action="<?= base_url('/menu/editItemRiwayat') ?>" method="POST">
+                                            <button type="submit">nice!</button>
+                                        <?php endif; ?>
+                                </td>
 
-                                <?php foreach ($colRwyGolongan as $col) : ?>
-                                    <td><?= strtoupper($item[$col]) ?></td>
+                                <?php foreach ($colRwyGolongan as $name => $col) : ?>
+                                    <td class="">
+                                        <?php if ($name == "golongan") : ?>
+                                            <input type="text" list="<?= 'list' . ucwords($name) . 'Option' ?>" name="<?= 'id_' . $name ?>" value="<?= $item['id_' . $name] . " - " . $item['pangkat'] ?>" <?= $edit == 'edit-rwy-gol-' . $item['id_riwayat_golongan'] ? "" : "disabled"  ?> autocomplete="off">
+                                        <?php else : ?>
+                                            <input type="text" name="<?= $col ?>" value="<?= strtoupper($item[$col]) ?>" <?= $edit == 'edit-rwy-gol-' . $item['id_riwayat_golongan'] ? "" : "disabled"  ?>>
+                                        <?php endif; ?>
+                                    </td>
                                 <?php endforeach; ?>
+                                <input type="text" name="nip" value="<?= $nip ?>" hidden>
+                                <input type="text" value="<?= $item['id_riwayat_golongan'] ?>" name="id_riwayat_golongan" hidden>
+                                <input type="text" value="riwayat_golongan" name="table" hidden>
                             </tr>
+                            </form>
                         <?php endforeach; ?>
+
+                        <?php if ($edit == 'add-rwy-gol') : ?>
+                            <tr>
+                                <td><?= $i++; ?></td>
+                                <td>
+                                    <form action="<?= base_url('/menu/addItemRiwayat') ?>" method="POST">
+                                        <button type="submit">nice!</button>
+                                </td>
+
+                                <?php foreach ($colRwyGolongan as $name => $col) : ?>
+                                    <td>
+                                        <?php if ($name == "golongan") : ?>
+                                            <input type="text" list="<?= 'list' . ucwords($name) . 'Option' ?>" name="<?= 'id_' . $name ?>" autocomplete="off">
+                                        <?php else : ?>
+                                            <input type="text" name="<?= $col ?>">
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endforeach; ?>
+                                <input type="text" name="nip" value="<?= $nip ?>" hidden>
+                                <input type="text" value="riwayat_golongan" name="table" hidden>
+                            </tr>
+                            </form>
+                        <?php endif ?>
+
+
                     </tbody>
                 </table>
-                <a href="<?= base_url('/menu/lihatdetail/' . $nip . '/add-rwy-pdd') ?>" class="uk-button ">Tambah data baru</a>
+                <a href="<?= base_url('/menu/lihatdetail/' . $nip . '/add-rwy-gol') ?>" class="uk-button ">Tambah data baru</a>
             </li>
             <li>Bazinga!</li>
         </ul>

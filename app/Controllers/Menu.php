@@ -253,7 +253,7 @@ class Menu extends BaseController
 			'sk' => 'no_sk', 'jabatan' => 'nama_jabatan', 'tahun' => 'tahun'
 		];
 		$fieldRwyGolongan = [
-			'sk' => 'no_sk', 'golongan' => 'id_golongan', 'pangkat' => 'pangkat', 'tahun' => 'tahun'
+			'sk' => 'no_sk', 'golongan' => 'id_golongan', 'tahun' => 'tahun'
 		];
 
 		$fieldRwyPendidikan = [];
@@ -482,8 +482,8 @@ class Menu extends BaseController
 
 		$dataRiwayat = array();
 
-		$jabatan = explode(" ", $this->request->getVar('jabatan'));
-		$golongan = explode(" ", $this->request->getVar('pangkat_gol'));
+		$jabatan = explode(" ", $this->request->getVar('id_jabatan'));
+		$golongan = explode(" ", $this->request->getVar('id_golongan'));
 		$satker = explode(" ", $this->request->getVar('id_satker'));
 		$bagian = explode(" ", $this->request->getVar('id_bagian'));
 		$subbag = explode(" ", $this->request->getVar('id_subbag'));
@@ -521,8 +521,8 @@ class Menu extends BaseController
 
 		$dataRiwayat = array();
 
-		$jabatan = explode(" ", $this->request->getVar('jabatan'));
-		$golongan = explode(" ", $this->request->getVar('pangkat_gol'));
+		$jabatan = explode(" ", $this->request->getVar('id_jabatan'));
+		$golongan = explode(" ", $this->request->getVar('id_golongan'));
 		$satker = explode(" ", $this->request->getVar('id_satker'));
 		$bagian = explode(" ", $this->request->getVar('id_bagian'));
 		$subbag = explode(" ", $this->request->getVar('id_subbag'));
